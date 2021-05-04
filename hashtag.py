@@ -1,18 +1,78 @@
 import json
 import string
-
 import nltk
 import pandas as pd
 import plotly.graph_objects as go
 import plotly
 import re
 
+
+"""
+Uncleaned data on COVID-19 in General
+"""
+
 df_general = pd.read_csv(
     'https://raw.githubusercontent.com/FabioPalliparambil98/covid-dataset/main/combined_generaltweets.csv')
+
+df_general["tweetcreatedts"] = pd.to_datetime(df_general["tweetcreatedts"])
+df_general['Month'] = df_general.tweetcreatedts.dt.month
+df_general['Hour'] = df_general.tweetcreatedts.dt.hour
+df_general['day_in_week'] = df_general.tweetcreatedts.dt.weekday
+df_general['day'] = df_general.tweetcreatedts.dt.day
+df_general['day_in_week'].replace(0, 'Monday',inplace=True)
+df_general['day_in_week'].replace(1, 'Tuesday',inplace=True)
+df_general['day_in_week'].replace(2, 'Wednesday',inplace=True)
+df_general['day_in_week'].replace(3, 'Thursday',inplace=True)
+df_general['day_in_week'].replace(4, 'Friday',inplace=True)
+df_general['day_in_week'].replace(5, 'Saturday',inplace=True)
+df_general['day_in_week'].replace(6, 'Sunday',inplace=True)
+
+"""
+Uncleaned data on COVID-19 Restriction
+"""
+
 df_restriction = pd.read_csv(
     'https://raw.githubusercontent.com/FabioPalliparambil98/covid-dataset/main/combined_restrictiontweets.csv')
+
+df_restriction["tweetcreatedts"] = pd.to_datetime(df_restriction["tweetcreatedts"])
+df_restriction['Month'] = df_restriction.tweetcreatedts.dt.month
+df_restriction['Hour'] = df_restriction.tweetcreatedts.dt.hour
+df_restriction['day_in_week'] = df_restriction.tweetcreatedts.dt.weekday
+df_restriction['day'] = df_restriction.tweetcreatedts.dt.day
+
+df_restriction['day_in_week'].replace(0, 'Monday',inplace=True)
+df_restriction['day_in_week'].replace(1, 'Tuesday',inplace=True)
+df_restriction['day_in_week'].replace(2, 'Wednesday',inplace=True)
+df_restriction['day_in_week'].replace(3, 'Thursday',inplace=True)
+df_restriction['day_in_week'].replace(4, 'Friday',inplace=True)
+df_restriction['day_in_week'].replace(5, 'Saturday',inplace=True)
+df_restriction['day_in_week'].replace(6, 'Sunday',inplace=True)
+
+
+
+
+"""
+Uncleaned data on COVID-19 Vaccination
+"""
+
 df_vaccination = pd.read_csv(
     'https://raw.githubusercontent.com/FabioPalliparambil98/covid-dataset/main/combined_vaccinationtweets.csv')
+
+df_vaccination["tweetcreatedts"] = pd.to_datetime(df_vaccination["tweetcreatedts"])
+df_vaccination['Month'] = df_vaccination.tweetcreatedts.dt.month
+df_vaccination['Hour'] = df_vaccination.tweetcreatedts.dt.hour
+df_vaccination['day_in_week'] = df_vaccination.tweetcreatedts.dt.weekday
+df_vaccination['day'] = df_vaccination.tweetcreatedts.dt.day
+
+df_vaccination['day_in_week'].replace(0, 'Monday',inplace=True)
+df_vaccination['day_in_week'].replace(1, 'Tuesday',inplace=True)
+df_vaccination['day_in_week'].replace(2, 'Wednesday',inplace=True)
+df_vaccination['day_in_week'].replace(3, 'Thursday',inplace=True)
+df_vaccination['day_in_week'].replace(4, 'Friday',inplace=True)
+df_vaccination['day_in_week'].replace(5, 'Saturday',inplace=True)
+df_vaccination['day_in_week'].replace(6, 'Sunday',inplace=True)
+
+
 
 """
 Function for collecting all the Hashtag
@@ -32,14 +92,6 @@ Function for collecting hashed into multiple dataframe
 """
 
 
-# def hastag_dataframe(df):
-#     HT_general = collectHashtag(df['text'])
-#     HT_general = sum(HT_general, [])
-#     general_tag = nltk.FreqDist(HT_general)
-#     hashtag_general = pd.DataFrame({'Hashtag': list(general_tag.keys()), 'Count': list(general_tag.values())})
-#     hashtag_general = hashtag_general.nlargest(columns='Count', n=10)
-#     return hashtag_general
-
 def clean_hastag(text):
     text = "".join([char for char in text if char not in string.punctuation])
     text = text.lower()
@@ -47,6 +99,7 @@ def clean_hastag(text):
 
 
 def hastag_dataframe(df):
+
     HT_general = collectHashtag(df['text'])
     HT_general = sum(HT_general, [])
     general_tag = nltk.FreqDist(HT_general)
@@ -238,3 +291,6 @@ def create_plot(df_general_hashtag, df_restriction_hashtag, df_vaccination_hasht
     Pie_json = json.dumps(Pie, cls=plotly.utils.PlotlyJSONEncoder)
 
     return general_JSON, restriction_JSON, vaccination_JSON, line_genreal_JSON, line_restriction_JSON, line_vaccination_JSON, all_scatter_lineJSON, Scatters_JSON, Pie_json
+
+
+

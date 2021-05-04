@@ -17,6 +17,28 @@
 
 <div class="container-fluid">
 
+    <div class="content-header">
+        <div class="container-fluid"  align = "left">
+
+        </div><!-- /.container-fluid -->
+    </div>
+
+            <div class="row mb-2">
+                <div class="col-sm-6" >
+                    <form  action="/" method="POST">
+                        <select name="day"  method="POST" class="form-select">
+                             <option selected>Select a Day </option>
+                            {% for day in days_in_weeks %}
+                              <option value={{ day }}>{{ day }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <input type="Submit" value="Submit">
+                    </form>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+
      <div class="row">
          <div class="col-lg-2" >
             <div class="card" align = "left">
@@ -222,6 +244,16 @@
              </div><!-- /.card -->
          </div><!-- /.col -->
     </div>
+
+    <div class="row">
+        <div id="general-table" >
+            <script >
+                var table = {{plots.table | safe}};
+                Plotly.plot('general-table',table,{});
+            </script>
+        </div>
+    </div>
+
 
 </div><!-- /.container-fluid -->
 
