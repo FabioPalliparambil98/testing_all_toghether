@@ -1,0 +1,228 @@
+{% extends "design.html" %}
+{% block script %}
+{% endblock script %}
+
+{% block my_content %}
+
+<div class="content-header">
+  <div class="container-fluid"  align = "center">
+    <div class="row mb-2">
+      <div class="col-sm-6" >
+        <h1 class="m-0 text-dark">COVID-19 Visualisation Dashboard </h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+
+
+<div class="container-fluid">
+
+     <div class="row">
+         <div class="col-lg-2" >
+            <div class="card" align = "left">
+                  <h5 class="card-title" align = "center">General Covid-19 Sentiment</h5>
+                  <div class="card-body">
+                  {% if sentiment_general == "positive" %}
+                     <img style='height: 100%; width: 100%; object-fit: contain' src="https://cdn4.iconfinder.com/data/icons/emoji-66/64/05-happy-512.png"
+                  alt="positive emoji" align="center">
+                      <p class="card-text" align = "center">positive</p>
+                  {% else %}
+                      <img style='height: 100%; width: 100%; object-fit: contain' src="https://cdn4.iconfinder.com/data/icons/emoji-66/64/03-sad-512.png"
+                      alt="negative emoji" align="center">
+                      <p class="card-text" align = "center">negative</p>
+                  {% endif %}
+                  </div><!-- /.card-body -->
+            </div><!-- /.card -->
+        </div><!-- /.col -->
+
+        <div class="col-lg-2"  >
+            <div class="card" align = "center"  >
+                <h5 class="card-title" align = "center">Vaccincation Sentiment</h5>
+                  <div class="card-body">
+                      {% if sentiment_vaccination == "positive" %}
+                     <img style='height: 100%; width: 100%; object-fit: contain' src="https://cdn4.iconfinder.com/data/icons/emoji-66/64/05-happy-512.png"
+                        alt="positive emoji" align="center">
+                      <p class="card-text" align = "center">positive</p>
+                  {% else %}
+                      <img style='height: 100%; width: 100%; object-fit: contain' src="https://cdn4.iconfinder.com/data/icons/emoji-66/64/03-sad-512.png"
+                      alt="negative emoji" align="center">
+                      <p class="card-text" align = "center">negative</p>
+                  {% endif %}
+                  </div><!-- /.card-body -->
+            </div><!-- /.card -->
+        </div><!-- /.col -->
+
+        <div class="col-lg-2" align = "right" >
+            <div class="card" align = "right">
+                <h5 class="card-title" align = "center">Restriction Sentiment</h5>
+                <div class="card-body">
+                {% if sentiment_restriction == "positive" %}
+                    <img style='height: 100%; width: 100%; object-fit: contain' src="https://cdn4.iconfinder.com/data/icons/emoji-66/64/05-happy-512.png"
+                    alt="Flowers in Chania" align="center">
+                    <p class="card-text" align = "center">
+                     positive
+                    </p>
+                {% else %}
+                    <img style='height: 100%; width: 100%; object-fit: contain' src="https://cdn4.iconfinder.com/data/icons/emoji-66/64/03-sad-512.png"
+                    alt="negative" align="center">
+                    <p class="card-text" align = "center">
+                     negative
+                    </p>
+                {% endif %}
+              </div><!-- /.card-body -->
+            </div><!-- /.card -->
+        </div><!-- /.col -->
+     </div><!-- /.row -->
+
+
+    <div class="content-header"  align = "center">
+        <div class="container-fluid"  align = "center">
+            <div class="row mb-2">
+                <div class="col-sm-6" >
+                    <h1 class="m-0 text-dark" align="center">COVID-19 WordCloud Visualisation</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div><!-- /.content-header -->
+
+    <div class="row">
+        <div class="col-lg-4" >
+            <div class="card" align = "center">
+                <h5 class="card-title" align = "center">General Covid-19 WordCloud</h5>
+                <div class="card-body">
+                    <img style='height: 100%; width: 100%; object-fit: contain' src= "{{url_for('static', filename='general_wordcloud.png')}}" alt="Word Cloud" width="500" height="500" align="center">
+                </div>
+            </div><!-- /.card -->
+        </div><!-- /.col -->
+
+        <div class="col-lg-4" >
+            <div class="card" align = "center">
+                <h5 class="card-title" align = "center">Vaccincation WordCloud</h5>
+                <div class="card-body">
+                    <img style='height: 100%; width: 100%; object-fit: contain'src="{{url_for('static', filename='word_cloudvaccination.png')}}" alt="Word Cloud" width="500" height="500" align="center">
+                </div>
+            </div><!-- /.card -->
+        </div><!-- /.col -->
+
+        <div class="col-lg-4" >
+            <div class="card" align = "center">
+                <h5 class="card-title" align = "center">Restriction WordCloud</h5>
+                <div class="card-body">
+                    <img style='height: 100%; width: 100%; object-fit: contain'src="{{url_for('static', filename='word_cloudrestriciton.png')}}" alt="Word Cloud" width="500" height="500" align="center">
+                </div>
+            </div><!-- /.card -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+	<div class="row">
+         <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="plot_general" >
+                     <script >
+                         var plot_general = {{plots.plot_general | safe}};
+                         Plotly.plot('plot_general',plot_general,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+
+         <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="plot_restriction" >
+                     <script >
+                         var plot_restriction = {{plots.plot_restriction | safe}};
+                         Plotly.plot('plot_restriction',plot_restriction,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+
+        <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="plot_vaccination" >
+                     <script >
+                         var plot_vaccination = {{plots.plot_vaccination | safe}};
+                         Plotly.plot('plot_vaccination',plot_vaccination,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+
+        <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="line_general" >
+                     <script >
+                         var line_general = {{plots.line_general | safe}};
+                         Plotly.plot('line_general',line_general,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+
+        <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="line_vaccination" >
+                     <script >
+                         var line_vaccination = {{plots.line_vaccination | safe}};
+                         Plotly.plot('line_vaccination',line_vaccination,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+
+        <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="line_restriction" >
+                     <script >
+                         var line_restriction = {{plots.line_restriction | safe}};
+                         Plotly.plot('line_restriction',line_restriction,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+
+
+	</div><!-- /.row -->
+
+     <div class="row">
+         <div class="col-lg-10" align="center" >
+             <div class="card" align = "center">
+                 <div id="all_line_scatters" >
+                     <script >
+                         var all_line_scatters = {{plots.all_line_scatters | safe}};
+                         Plotly.plot('all_line_scatters',all_line_scatters,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+    </div>
+
+    <div class="row">
+         <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="scatter_circles" >
+                     <script >
+                         var scatter_circles = {{plots.scatter_circles | safe}};
+                         Plotly.plot('scatter_circles',scatter_circles,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+    </div>
+
+    <div class="row">
+         <div class="col-lg-4" >
+             <div class="card" align = "center">
+                 <div id="pie_general" >
+                     <script >
+                         var pie_general = {{plots.pie_general | safe}};
+                         Plotly.plot('pie_general',pie_general,{});
+                     </script>
+                 </div>
+             </div><!-- /.card -->
+         </div><!-- /.col -->
+    </div>
+
+</div><!-- /.container-fluid -->
+
+{% endblock my_content %}

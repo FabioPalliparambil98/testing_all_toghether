@@ -1,0 +1,50 @@
+{% extends "design.html" %}
+{% block script %}
+
+{% endblock script %}
+
+{% block my_content %}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Live Analysis On Twitter Data </h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-11" align = "center">
+            <div class="card" >
+                <div id="line_graph" >
+                    <script >
+                        var line_graph = {{line_graph | safe}};
+                        Plotly.plot('line_graph',line_graph,{});
+                    </script>
+                </div><!-- /.card -->
+            </div><!-- /.col -->
+        </div>
+    </div>
+
+
+        <div class="col-lg-6" align = "center">
+            <div class="card" >
+                <div id="choropleth_map" >
+                    <script >
+                        var choropleth_map = {{choropleth_map | safe}};
+                        Plotly.plot('choropleth_map',choropleth_map,{});
+                    </script>
+                </div><!-- /.card -->
+            </div><!-- /.col -->
+        </div>
+    </div>
+
+</div>
+
+{% endblock my_content %}

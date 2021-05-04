@@ -1,0 +1,89 @@
+{% extends "design.html" %}
+{% block script %}
+
+{% endblock script %}
+
+{% block my_content %}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Covid-19 Visualisation Dashboard </h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+
+<!-- Confirmed, Recovered, Deaths Card -->
+
+<!-- Plotly plot placeholder -->
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{total_all_confirmed}}</h3>
+                    <p>Total Confirmed</p>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-sm">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{total_all_recovered}}<sup style="font-size: 20px"></sup></h3>
+                    <p>Total Recovered</p>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <!-- ./col -->
+        <div class="col-sm">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{total_all_deaths}}</h3>
+                    <p>Total Deaths</p>
+                </div>
+            </div>
+        </div>
+    <!-- ./col -->
+    </div>
+
+    <div class="row">
+        <div class="col">
+        </div>
+            <div class="col-6">
+                <!-- Placeholder for map-->
+                <div class="chart" id="plotly-geo">
+                </div>
+            </div>
+        <div class="col">
+        </div>
+    </div>
+        <div class="row">
+        <!-- Placeholder for the global-cases plot-->
+            <div class="chart" id="plotly-global">
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <!-- Placeholder for global-time series -->
+            <div id="plotly-timeseries"></div>
+        </div>
+    </div>
+<!-- Script to execute the Json ( we can create it also with looping) -->
+
+<script>
+    //Parse your Json variable here
+    var graphs = {{ context.plot_global_cases_per_country | safe }};
+    Plotly.plot('plotly-global', graphs, {});
+</script>
+{% endblock my_content %}

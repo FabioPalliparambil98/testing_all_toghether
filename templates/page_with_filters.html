@@ -1,0 +1,129 @@
+{% extends "design.html" %}
+{% block script %}
+
+{% endblock script %}
+
+
+{% block my_content %}
+
+<div class="content-header">
+  <div class="container-fluid"  align = "Left">
+    <div class="row mb-2">
+      <div class="col-sm-6" >
+        <h1 class="m-0 text-dark">Twitter Data Interactive Analysis with Selectable Filters </h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+
+
+
+<div class="container-fluid">
+
+            <div class="content-header"  align = "center">
+            <div class="container-fluid"  align = "center">
+                <div class="row mb-2">
+                    <div class="col-sm-6" >
+                        <h1 class="m-0 text-dark">Sentiment in Different Days  Visualisation</h1>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+     </div>
+
+
+        <div class="row">
+            <div class="col-lg-2" >
+
+
+            <form  action="/page_with_filters_after_request" method="POST">
+                <select name="day_in_week"  method="POST" class="form-select">
+                     <option selected>Select Day in the Week </option>
+                    {% for day in days_in_weeks %}
+                      <option value={{ day }}>{{ day }}</option>
+                    {% endfor %}
+                </select>
+
+        </div>
+
+    </div>
+    <br>
+
+    <div class="row">
+         <div class="col-lg-9" >
+
+                    <div class="chart" id="bargraph-4">
+                        <script>
+                            var graphs = {{weekday_plot | safe}};
+                            Plotly.plot('bargraph-4',graphs,{});
+                        </script>
+                    </div>
+
+        </div>
+    </div>
+
+    <div class="content-header"  align = "center">
+            <div class="container-fluid"  align = "center">
+                <div class="row mb-2">
+                    <div class="col-sm-6" >
+                        <h1 class="m-0 text-dark">Covid-19 Retweet Visualisation</h1>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+     </div>
+
+    <div class="col-lg-2" >
+        <div class="row">
+
+                <select name="sentiment"  method="POST" class="form-select-1">
+                     <option selected>Select Day in the Week </option>
+                    {% for sentiment in sentiment %}
+                      <option value={{ sentiment }}>{{ sentiment }}</option>
+                    {% endfor %}
+                </select>
+                <input type="Submit" value="Submit">
+            </form>
+    </div>
+    </div>
+
+    <div class="row">
+         <div class="col-lg-9" >
+
+                    <div class="chart" id="bargraph">
+                        <script>
+                            var graphs = {{sentiment_plot | safe}};
+                            Plotly.plot('bargraph',graphs,{});
+                        </script>
+                    </div>
+
+        </div>
+    </div>
+
+    <div class="content-header"  align = "center">
+            <div class="container-fluid"  align = "center">
+                <div class="row mb-2">
+                    <div class="col-sm-6" >
+                        <h1 class="m-0 text-dark">Covid-19 Multiple Dataset Visualisation</h1>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+     </div>
+
+     <div class="row" align="center">
+        <div class="col-lg-9"  >
+            <div class="chart" id="retweet_count_visualisation">
+                <script>
+                    var retweet_count_visualisation = {{retweet_count_visualisation | safe}};
+                    Plotly.plot('retweet_count_visualisation',retweet_count_visualisation,{});
+                </script>
+            </div>
+        </div>
+   </div>
+
+</div>
+
+
+
+
+
+
+{% endblock my_content %}
